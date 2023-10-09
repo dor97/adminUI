@@ -218,16 +218,19 @@ public class AppController implements Initializable {
 
         executionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
 
-            if(entityOriginalValuesMap.containsKey(newValue.getID())) {
+            try{
+                DTOPostRunPrepareSimulationData postRunPrepareSimulationData = communication.getSimulationPrepareData(newValue.getID());
                 entityOriginValues.clear();
-                entityOriginValues.addAll(entityOriginalValuesMap.get(newValue.getID()));
+                entityOriginValues.addAll(postRunPrepareSimulationData.getEntitiesPopulation().entrySet().stream().map(entry -> new entityOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
                 entityOriginValueTable.refresh();
-            }
 
-            if (environmentOriginalValuesMap.containsKey(newValue.getID())){
                 environmentOriginValues.clear();
-                environmentOriginValues.addAll(environmentOriginalValuesMap.get(newValue.getID()));
+                environmentOriginValues.addAll(postRunPrepareSimulationData.getEnvironmentsValues().entrySet().stream().map(entry -> new environmentOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
                 environmentOriginValueTable.refresh();
+
+            }catch (Exception e){
+                alert.setContentText(e.getMessage());
+                alert.show();
             }
 
 
@@ -686,7 +689,7 @@ public class AppController implements Initializable {
                             fines.setContentText(result.toString());
                             fines.show();});
                     }
-                    try{Thread.sleep(200);}catch (InterruptedException e){}}
+                    try{Thread.sleep(1000);}catch (InterruptedException e){}}
                 });
                 thread.setDaemon(true);
                 thread.start();
@@ -747,20 +750,30 @@ public class AppController implements Initializable {
                 //engine.updateNewlyFinishedSimulationInLoop(executionListViewData);
                 Thread thread = new Thread(() -> {  while(true)
                 {List<Integer> ids = communication.getNewlyFinishedSimulation(communication.getPrevIndexForFinishedSimulation());
-                    ObservableList<ExecutionListItem> toRemove = FXCollections.observableArrayList();
                     for(Integer id : ids){
                         for(ExecutionListItem executionListItem : executionListViewData){
                             if(executionListItem.getID().equals(id)){
-                                toRemove.add(executionListItem);
+                                executionListItem.setToFinished();
                             }
                         }
                     }
-
-                    Platform.runLater(() -> {for(ExecutionListItem executionListItem : toRemove){//TODO make logic when simulation ended
-                        executionListViewData.remove(executionListItem);
-                        executionListViewData.add(new ExecutionListItem(executionListItem.getID(), true));
-
-                    }});
+                    Platform.runLater(() -> executionListView.refresh());
+//                    Platform.runLater(() -> {executionListViewData.removeAll(ids);
+//                        executionListView.refresh();});
+//                    ObservableList<ExecutionListItem> toRemove = FXCollections.observableArrayList();
+//                    for(Integer id : ids){
+//                        for(ExecutionListItem executionListItem : executionListViewData){
+//                            if(executionListItem.getID().equals(id)){
+//                                toRemove.add(executionListItem);
+//                            }
+//                        }
+//                    }
+//
+//                    Platform.runLater(() -> {for(ExecutionListItem executionListItem : toRemove){//TODO make logic when simulation ended
+//                        executionListViewData.remove(executionListItem);
+//                        executionListViewData.add(new ExecutionListItem(executionListItem.getID(), true));
+//
+//                    }});
 
 
                     if(ids.size() != 0) {
@@ -774,7 +787,7 @@ public class AppController implements Initializable {
                                                   fines.setContentText(result.toString());
                                                   fines.show();});
                     }
-                    try{Thread.sleep(200);}catch (InterruptedException e){}}
+                    try{Thread.sleep(1000);}catch (InterruptedException e){}}
                 });
                 thread.setDaemon(true);
                 thread.start();
