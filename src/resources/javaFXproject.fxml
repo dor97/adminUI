@@ -61,9 +61,14 @@
                                   <TableColumn id="column" fx:id="amountColumn" prefWidth="168.66664123535156" text="Amount" />
                                 </columns>
                               </TableView>
-                              <Button mnemonicParsing="false" text="Button">
+                              <TextField fx:id="threadPoolSizeTextArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="282.0">
                                  <VBox.margin>
-                                    <Insets top="50.0" />
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Button fx:id="threadPoolSizeButton" mnemonicParsing="false" onAction="#setThreadPoolSize" text="set size">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
                            </children>

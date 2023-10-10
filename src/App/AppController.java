@@ -108,7 +108,8 @@ public class AppController implements Initializable {
     @FXML private TableView<environmentOriginalSimulationValuesTable> environmentOriginValueTable;
     @FXML private TableColumn<environmentOriginalSimulationValuesTable, String> environmentOriginColumn;
     @FXML private TableColumn<environmentOriginalSimulationValuesTable, String> valueOriginColumn;
-
+    @FXML private TextArea threadPoolSizeTextArea;
+    @FXML private Button threadPoolSizeButton;
 
 
     private simulationValue originalSimulationValue;
@@ -1237,5 +1238,23 @@ public class AppController implements Initializable {
         }
 
 
+    }
+
+    @FXML
+    void setThreadPoolSize(ActionEvent event) {
+        Integer size;
+        try{
+            size = Integer.parseInt(threadPoolSizeTextArea.getText());
+        }catch (Exception e){
+            alert.setContentText("must be a hole number as thread pool size");
+            alert.show();
+            return;
+        }
+        try {
+            communication.setThreadPoolSize(size);
+        }catch (Exception e){
+            alert.setContentText(e.getMessage());
+            alert.show();
+        }
     }
 }
