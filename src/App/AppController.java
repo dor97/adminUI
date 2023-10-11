@@ -176,6 +176,21 @@ public class AppController implements Initializable {
             treeViewController.setAlert(alert);
         }
         communication = new clientCommunication();
+        DTOIsThereAdmin isThereAdmin;
+        try {
+            isThereAdmin = communication.isThereAdmin();
+        }catch (Exception e){
+            alert.setContentText(e.getMessage());
+            alert.show();
+            return;
+        }
+
+        if(isThereAdmin.getAdminExist()){
+            alert.setContentText("admin all ready exist");
+            alert.show();
+            return;
+        }
+
         resultsGraphButton.setDisable(true);
         histogramButton.setDisable(true);
         environmentVarColumn.setCellValueFactory(new PropertyValueFactory<>("envVarNameColumn"));
