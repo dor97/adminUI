@@ -101,9 +101,12 @@
                                   <TableColumn fx:id="requestIdColumn" prefWidth="75.0" text="requestId" />
                                   <TableColumn fx:id="simulationNameColumn" prefWidth="118.39999389648438" text="simulationName" />
                                     <TableColumn fx:id="amountToRunColumn" prefWidth="104.79997253417969" text="amount" />
-                                    <TableColumn fx:id="requestStatusColumn" minWidth="2.4000244140625" prefWidth="108.800048828125" text="status" />
-                                    <TableColumn fx:id="currentlyRunningSimulationColumn" minWidth="6.4000244140625" prefWidth="127.199951171875" text="running" />
-                                    <TableColumn fx:id="doneRunningColumn" prefWidth="131.20001220703125" text="done" />
+                                    <TableColumn fx:id="userNameColumn" minWidth="2.4000244140625" prefWidth="108.800048828125" text="user name" />
+                                    <TableColumn fx:id="tickToRun" minWidth="6.4000244140625" prefWidth="127.199951171875" text="tick to run" />
+                                    <TableColumn fx:id="secToRun" prefWidth="131.20001220703125" text="sec to run" />
+                                    <TableColumn fx:id="requestStatusColumn" prefWidth="118.39999389648438" text="status" />
+                                    <TableColumn fx:id="currentlyRunningSimulationColumn" prefWidth="118.39999389648438" text="running" />
+                                    <TableColumn fx:id="doneRunningColumn" prefWidth="118.39999389648438" text="done" />
                                 </columns>
                               </TableView>
                               <HBox prefHeight="100.0" prefWidth="200.0">

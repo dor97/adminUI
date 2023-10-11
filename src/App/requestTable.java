@@ -7,17 +7,33 @@ public class requestTable {
     private String simulationName;
     private Integer amountToRun;
     private approvementStatus requestStatus;
+    private String userName;
+    private Integer tick;
+    private Integer sec;
+
     private Integer currentlyRunningSimulation;
     private Integer doneRunning;
 
-    public requestTable(Integer requestId, String simulationName, Integer amountToRun, approvementStatus requestStatus, Integer currentlyRunningSimulation, Integer doneRunning) {
+    public requestTable(Integer requestId, String simulationName, Integer amountToRun, approvementStatus requestStatus, String userName, Integer tick, Integer sec, Integer currentlyRunningSimulation, Integer doneRunning) {
         this.requestId = requestId;
         this.simulationName = simulationName;
         this.amountToRun = amountToRun;
         this.requestStatus = requestStatus;
+        this.userName = userName;
+        this.tick = tick;
+        this.sec = sec;
         this.currentlyRunningSimulation = currentlyRunningSimulation;
         this.doneRunning = doneRunning;
     }
+
+//    public requestTable(Integer requestId, String simulationName, Integer amountToRun, approvementStatus requestStatus, Integer currentlyRunningSimulation, Integer doneRunning) {
+//        this.requestId = requestId;
+//        this.simulationName = simulationName;
+//        this.amountToRun = amountToRun;
+//        this.requestStatus = requestStatus;
+//        this.currentlyRunningSimulation = currentlyRunningSimulation;
+//        this.doneRunning = doneRunning;
+//    }
 
     public Integer getRequestId() {
         return requestId;
@@ -65,5 +81,29 @@ public class requestTable {
 
     public void setDoneRunning(Integer doneRunning) {
         this.doneRunning = doneRunning;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getTick() {
+        return tick;
+    }
+
+    public void setTick(Integer tick) {
+        this.tick = tick;
+    }
+
+    public Integer getSec() {
+        return sec;
+    }
+
+    public void setSec(Integer sec) {
+        this.sec = sec;
     }
 }

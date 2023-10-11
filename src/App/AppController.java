@@ -102,6 +102,9 @@ public class AppController implements Initializable {
     @FXML private TableColumn<requestTable, approvementStatus> requestStatusColumn;
     @FXML private TableColumn<requestTable, Integer> currentlyRunningSimulationColumn;
     @FXML private TableColumn<requestTable, Integer> doneRunningColumn;
+    @FXML private TableColumn<requestTable, String> userNameColumn;
+    @FXML private TableColumn<requestTable, Integer> tickToRun;
+    @FXML private TableColumn<requestTable, Integer> secToRun;
     @FXML private TableView<entityOriginalSimulationValuesTable> entityOriginValueTable;
     @FXML private TableColumn<entityOriginalSimulationValuesTable, String> entityNameOriginColumn;
     @FXML private TableColumn<entityOriginalSimulationValuesTable, Integer> populationOriginColumn;
@@ -190,6 +193,9 @@ public class AppController implements Initializable {
         requestStatusColumn.setCellValueFactory(new PropertyValueFactory<>("requestStatus"));
         currentlyRunningSimulationColumn.setCellValueFactory(new PropertyValueFactory<>("currentlyRunningSimulation"));
         doneRunningColumn.setCellValueFactory(new PropertyValueFactory<>("doneRunning"));
+        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        tickToRun.setCellValueFactory(new PropertyValueFactory<>("tick"));
+        secToRun.setCellValueFactory(new PropertyValueFactory<>("sec"));
 
         entityNameOriginColumn.setCellValueFactory(new PropertyValueFactory<>("entity"));
         populationOriginColumn.setCellValueFactory(new PropertyValueFactory<>("population"));
@@ -384,7 +390,7 @@ public class AppController implements Initializable {
         if(newRequestDataList.size() > 0){
             for (newRequestData requestData : newRequestDataList){
                 if(requestData.getType().equals(typeOfNewRequestData.NEW)){
-                    requestTablesData.add(new requestTable(requestData.getId(), requestData.getSimulationName(), requestData.getAmountToRun(), requestData.getNewStatus(), requestData.getCurrentRun(), requestData.getDone()));
+                    requestTablesData.add(new requestTable(requestData.getId(), requestData.getSimulationName(), requestData.getAmountToRun(), requestData.getNewStatus(), requestData.getUserName(), requestData.getTick(), requestData.getSec(), requestData.getCurrentRun(), requestData.getDone()));
                     requestIdToIndex.put(requestData.getId(), requestTablesData.size() - 1);
                 }else {
                     if(requestData.getStatusChanged()){
