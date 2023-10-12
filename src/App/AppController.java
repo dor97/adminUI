@@ -40,9 +40,7 @@ import java.util.stream.Collectors;
 public class AppController implements Initializable {
 
     @FXML private Button defaultStyleButton;
-    @FXML private Button graphicDisplayButton;
-    @FXML private Button stopSimulationButton;
-    @FXML private Button resumeSimulationButton;
+
     @FXML private Label consistencyLabel;
     @FXML private Label averageLabel;
     @FXML private Button loadFileButton;
@@ -51,7 +49,6 @@ public class AppController implements Initializable {
     @FXML private Tab newExecutionTab;
     @FXML private Button hotStyleButton;
     @FXML private Button coldStyleButton;
-    @FXML private Button nextButton;
     @FXML private TabPane tabPane;
     @FXML private Tab DetailsTab;
     @FXML private BorderPane detailsBorderPane;
@@ -63,12 +60,11 @@ public class AppController implements Initializable {
     @FXML private Button histogramButton;
     @FXML private Label consistencyValueLabel;
     @FXML private Label averageValueLabel;
-    @FXML private Button pauseButton;
     @FXML private ListView<ExecutionListItem> executionListView;
     @FXML private TableView entitiesRunTable;
     @FXML private TableColumn entityRunColumn;
     @FXML private TableColumn populationRunColumn;
-    @FXML private Button rerunButton;
+
     @FXML private Label ticksLabel;
     @FXML private Label ticksValueLabel;
     @FXML private Label secondsLabel;
@@ -88,11 +84,6 @@ public class AppController implements Initializable {
     @FXML private TreeView<DTOSimulationDetailsItem> detailsTreeView;
     @FXML private TextField loadedFilePathTextBox;
     @FXML private TextArea exceptionArea;
-    @FXML private ChoiceBox<String> simulationNameChoiceBox;
-    @FXML private TextField amountToRunfiled;
-    @FXML private TextField tickfiled;
-    @FXML private TextField secfield;
-    @FXML private Button submitButton;
     @FXML private Button acceptButton;
     @FXML private Button denyButton;
     @FXML private TableView<requestTable> requestTable;
@@ -169,7 +160,6 @@ public class AppController implements Initializable {
 //            System.out.println(e.getMessage());
 //        }
 
-        rerunButton.setDisable(true);
         if (treeViewController != null && treeDetailsController != null) {
             treeViewController.setMainController(this);
             treeDetailsController.setMainController(this);
@@ -227,12 +217,6 @@ public class AppController implements Initializable {
         queueManagementTable.setItems(queueManagementData);
         executionListView.setItems(executionListViewData);
 
-        nextButton.setDisable(true);
-        graphicDisplayButton.setDisable(true);
-        pauseButton.setDisable(true);
-        resumeSimulationButton.setDisable(true);
-        stopSimulationButton.setDisable(true);
-
         isSimulationEnded.addListener((observable, oldValue, newValue) -> {
             displaySimulationResults();
             resultsGraphButton.setDisable(false);});
@@ -272,7 +256,6 @@ public class AppController implements Initializable {
                 resultsTreeView.setRoot(null);
                 consistencyValueLabel.setText("");
                 averageValueLabel.setText("");
-                rerunButton.setDisable(true);
                 histogramButton.setDisable(true);
                 resultsGraphButton.setDisable(true);
                 exceptionArea.setText("");
@@ -283,24 +266,24 @@ public class AppController implements Initializable {
                 lastSimulationNum = selectedValue;
                 try {
                     communication.setChosenSimulationId(selectedValue);
-                    if (communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() == Status.RUNNING) {
-                        pauseButton.setDisable(false);
-                        resumeSimulationButton.setDisable(false);
-                        stopSimulationButton.setDisable(false);
-                    } else {
-                        pauseButton.setDisable(true);
-                        resumeSimulationButton.setDisable(true);
-                        stopSimulationButton.setDisable(true);
-                        nextButton.setDisable(true);
-                        graphicDisplayButton.setDisable(true);
-                    }
+//                    if (communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() == Status.RUNNING) {
+//                        pauseButton.setDisable(false);
+//                        resumeSimulationButton.setDisable(false);
+//                        stopSimulationButton.setDisable(false);
+//                    } else {
+//                        pauseButton.setDisable(true);
+//                        resumeSimulationButton.setDisable(true);
+//                        stopSimulationButton.setDisable(true);
+//                        nextButton.setDisable(true);
+//                        graphicDisplayButton.setDisable(true);
+//                    }
 
 
-                    if (communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() != Status.FINISHED) {
-                        rerunButton.setDisable(true);
-                    } else {
-                        rerunButton.setDisable(false);
-                    }
+//                    if (communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() != Status.FINISHED) {
+//                        rerunButton.setDisable(true);
+//                    } else {
+//                        rerunButton.setDisable(false);
+//                    }
                     if (communication.getSimulationStatus(selectedValue).getSimulationStatus() == Status.WAITINGTORUN) {
                         newTask = null;
                         return;
@@ -345,7 +328,7 @@ public class AppController implements Initializable {
                 histogramButton.setDisable(true);
             }
         }));
-        simulationNameChoiceBox.setOnAction((ActionEvent event) -> simulationChosenName = simulationNameChoiceBox.getValue());
+        //simulationNameChoiceBox.setOnAction((ActionEvent event) -> simulationChosenName = simulationNameChoiceBox.getValue());
         communication.setIsAdmin(true);
         communication.setUserName("admin");
         try {
@@ -431,7 +414,8 @@ public class AppController implements Initializable {
                                                 Thread.sleep(1000);
                                                 if(communication.getIsWorldDifenichanCollecenUpdated()) {
                                                     treeViewController.displayFileDetails(communication);
-                                                    addWorldsToChoiceBox();}
+                                                    //addWorldsToChoiceBox();
+                                                    }
                                             }catch (Exception e){
                                                 System.out.println(e.getMessage());
                                             }
@@ -440,14 +424,14 @@ public class AppController implements Initializable {
         thread.start();
     }
 
-    private void addWorldsToChoiceBox(){
-        List<String> worldsToAdd = communication.getWorldDifenichanCollecen().stream().skip(choiceBoxAddIndex).collect(Collectors.toList());
-        choiceBoxAddIndex += worldsToAdd.size();
-        for (String worldName : worldsToAdd){
-            simulationNameChoiceBox.getItems().add(worldName);
-        }
-
-    }
+//    private void addWorldsToChoiceBox(){
+//        List<String> worldsToAdd = communication.getWorldDifenichanCollecen().stream().skip(choiceBoxAddIndex).collect(Collectors.toList());
+//        choiceBoxAddIndex += worldsToAdd.size();
+//        for (String worldName : worldsToAdd){
+//            simulationNameChoiceBox.getItems().add(worldName);
+//        }
+//
+//    }
 
     public void stopGettingDataUsingTask(myTask task){
         synchronized (task) {
@@ -833,77 +817,6 @@ public class AppController implements Initializable {
         }
     }
 
-    public void rerun(ActionEvent actionEvent) {
-        try {
-            if (communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() != Status.FINISHED) {
-                return;
-            }
-
-            if (lastSimulationNum != 0) {
-                entitiesTableData.clear();
-                DTODataForReRun dataForReRun = communication.getDataForRerun(lastSimulationNum);
-                if (dataForReRun == null) {
-                    return;
-                }
-                for (String entity : dataForReRun.getEntitiesPopulation().keySet()) {
-                    entitiesTableData.add(new EntitiesTable(entity, dataForReRun.getEntitiesPopulation().get(entity).toString()));
-                    //entitiesTableData.add(new EntitiesTable(entity.getName(), "0"));
-                }
-
-                for (EnvironmentVariableTable environmentVariableTable : environmentVariableTableData) {
-                    if (dataForReRun.getEnvironmentsValues().containsKey(environmentVariableTable.getEnvVarNameNoType())) {
-                        environmentVariableTable.setValueInText(dataForReRun.getEnvironmentsValues().get(environmentVariableTable.getEnvVarNameNoType()).toString());
-                    } else {
-                        environmentVariableTable.setValueInText("");
-                    }
-                }
-            }
-        }catch (Exception e){
-
-        }
-    }
-
-    public void pauseSimulation(ActionEvent actionEvent) {
-        nextButton.setDisable(false);
-        pauseButton.setDisable(true);
-        resumeSimulationButton.setDisable(false);
-        graphicDisplayButton.setDisable(false);
-        resultsGraphButton.setDisable(false);
-        try {
-            communication.pauseSimulation(lastSimulationNum);
-        }catch (Exception e){
-
-        }
-        fillResultsTreeView();
-    }
-
-    public void stopSimulation(ActionEvent actionEvent) {
-        nextButton.setDisable(true);
-        try {
-            communication.stopSimulation(lastSimulationNum);
-        }catch (Exception e){
-
-        }
-    }
-
-    public void resumeSimulation(ActionEvent actionEvent) {
-        nextButton.setDisable(true);
-        resumeSimulationButton.setDisable(true);
-        pauseButton.setDisable(false);
-        graphicDisplayButton.setDisable(true);
-        resultsGraphButton.setDisable(true);
-        try {
-            communication.resumeSimulation(lastSimulationNum);
-        }catch (Exception e){
-
-        }
-        resultsTreeView.setRoot(null);
-        averageValueLabel.setText("");
-        consistencyValueLabel.setText("");
-        histogramButton.setDisable(true);
-        graphicDisplayButton.setDisable(true);
-        resultsGraphButton.setDisable(true);
-    }
 
     public void showGraph(ActionEvent actionEvent) {
 
@@ -937,19 +850,6 @@ public class AppController implements Initializable {
         stage.show();
     }
 
-    public void nextSimulationStep(ActionEvent actionEvent) {
-        try {
-            communication.moveOneStep(lastSimulationNum);
-            if (simulationSpace != null) {
-                createSimulationSpace(communication.getMap(lastSimulationNum));
-            }
-            consistencyValueLabel.setText("");
-            averageValueLabel.setText("");
-            fillResultsTreeView();
-        }catch (Exception e){
-
-        }
-    }
     public void changeStyleHot(ActionEvent actionEvent) {
         DetailsTab.setStyle("-fx-background-color: yellow;");
         resultsTab.setStyle("-fx-background-color: red;");
@@ -976,15 +876,15 @@ public class AppController implements Initializable {
         averageLabel.setStyle("-fx-background-color: #d97575;");
         consistencyValueLabel.setStyle("-fx-background-color: #FF7300FF;");
         averageValueLabel.setStyle("-fx-background-color: #d97575;");
-        rerunButton.setStyle("-fx-background-color: #eac81d;");
-        resumeSimulationButton.setStyle("-fx-background-color: #eac81d;");
-        nextButton.setStyle("-fx-background-color: #fdc076;");
+//        rerunButton.setStyle("-fx-background-color: #eac81d;");
+//        resumeSimulationButton.setStyle("-fx-background-color: #eac81d;");
+//        nextButton.setStyle("-fx-background-color: #fdc076;");
         histogramButton.setStyle("-fx-background-color: #ee7d0c;");
         resultsGraphButton.setStyle("-fx-background-color: #ee7d0c;");
-        pauseButton.setStyle("-fx-background-color: #FF0000FF;");
-        stopSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
+//        pauseButton.setStyle("-fx-background-color: #FF0000FF;");
+//        stopSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
         clearSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
-        graphicDisplayButton.setStyle("-fx-background-color: #efba71;");
+//        graphicDisplayButton.setStyle("-fx-background-color: #efba71;");
         queueManagementTable.refresh();
         environmentVarTable.refresh();
         entitiesTable.refresh();
@@ -1017,38 +917,18 @@ public class AppController implements Initializable {
         averageLabel.setStyle("-fx-background-color: #c0afe7;");
         consistencyValueLabel.setStyle("-fx-background-color: #9887b0;");
         averageValueLabel.setStyle("-fx-background-color: #c0afe7;");
-        rerunButton.setStyle("-fx-background-color: #1dea76;");
-        resumeSimulationButton.setStyle("-fx-background-color: #1dea76;");
-        nextButton.setStyle("-fx-background-color: #9c76fd;");
+//        rerunButton.setStyle("-fx-background-color: #1dea76;");
+//        resumeSimulationButton.setStyle("-fx-background-color: #1dea76;");
+//        nextButton.setStyle("-fx-background-color: #9c76fd;");
         histogramButton.setStyle("-fx-background-color: #00d0ff;");
         resultsGraphButton.setStyle("-fx-background-color: #00d0ff;");
-        pauseButton.setStyle("-fx-background-color: #994de3;");
-        stopSimulationButton.setStyle("-fx-background-color: #994de3;");
-        graphicDisplayButton.setStyle("-fx-background-color: #96b2bd;");
+//        pauseButton.setStyle("-fx-background-color: #994de3;");
+//        stopSimulationButton.setStyle("-fx-background-color: #994de3;");
+//        graphicDisplayButton.setStyle("-fx-background-color: #96b2bd;");
         queueManagementTable.refresh();
         environmentVarTable.refresh();
         entitiesTable.refresh();
         entitiesRunTable.refresh();
-    }
-
-    public void showGraphicDisplay(ActionEvent actionEvent) {
-        try {
-            DTOMap graphicDisplay = communication.getMap(lastSimulationNum);
-            graphicDisplayStage = new Stage();
-
-            graphicDisplayStage.setTitle("Simulation Space");
-            final NumberAxis xAxis = new NumberAxis(0, graphicDisplay.getCols(), 5);
-            final NumberAxis yAxis = new NumberAxis(0, graphicDisplay.getRows(), 5);
-            simulationSpace = new ScatterChart(xAxis, yAxis);
-
-            createSimulationSpace(graphicDisplay);
-
-            Scene scene = new Scene(simulationSpace, 600, 500);
-            graphicDisplayStage.setScene(scene);
-            graphicDisplayStage.show();
-        }catch (Exception e){
-
-        }
     }
 
     private void createSimulationSpace(DTOMap graphicDisplay) {
@@ -1103,14 +983,14 @@ public class AppController implements Initializable {
         averageLabel.setStyle(null);
         consistencyValueLabel.setStyle(null);
         averageValueLabel.setStyle(null);
-        rerunButton.setStyle(null);
-        resumeSimulationButton.setStyle(null);
-        nextButton.setStyle(null);
+//        rerunButton.setStyle(null);
+//        resumeSimulationButton.setStyle(null);
+//        nextButton.setStyle(null);
         histogramButton.setStyle(null);
         resultsGraphButton.setStyle(null);
-        pauseButton.setStyle(null);
-        stopSimulationButton.setStyle(null);
-        graphicDisplayButton.setStyle(null);
+//        pauseButton.setStyle(null);
+//        stopSimulationButton.setStyle(null);
+//        graphicDisplayButton.setStyle(null);
         queueManagementTable.refresh();
         environmentVarTable.refresh();
         entitiesTable.refresh();
@@ -1161,62 +1041,6 @@ public class AppController implements Initializable {
 
     private void setThreadPoolProperties(ObservableList<QueueManagement> threadPoolList, Integer value, String status){
         Platform.runLater(() -> threadPoolList.add(new QueueManagement(status, value)));
-    }
-
-    @FXML
-    void amountToRun(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void tick(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void sec(ActionEvent event) {
-
-
-    }
-
-    @FXML
-    void submitRequest(ActionEvent event) {
-        try {
-            simulationChosenName = simulationNameChoiceBox.getValue();
-            try {
-                amountToRun = Integer.parseInt(amountToRunfiled.getText());
-            }catch (Exception e){
-                alert.setContentText("must enter number to amount to run");
-                alert.show();
-            }
-            try {
-                if(tickfiled.getText().equals("")){
-                    ticks = null;
-                }else {
-                    ticks = Integer.parseInt(tickfiled.getText());
-                }
-            }catch (Exception e){
-                alert.setContentText("can only enter numbers to ticks or live empty");
-                alert.show();
-            }
-            try{
-                if(secfield.getText().equals("")){
-                    sec = null;
-                }else {
-                    sec = Integer.parseInt(secfield.getText());
-                }
-            }catch (Exception e){
-                alert.setContentText("can only enter numbers to ticks or live empty");
-                alert.show();
-            }
-            communication._askToRunASimulation(simulationChosenName, amountToRun, ticks, sec);
-        }catch (Exception e){
-            alert.setContentText(e.getMessage());
-            alert.show();
-        }
-
     }
 
     @FXML
