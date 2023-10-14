@@ -60,7 +60,7 @@
                                   <TableColumn id="column" fx:id="amountColumn" prefWidth="168.66664123535156" text="Amount" />
                                 </columns>
                               </TableView>
-                              <Label text="chose size of tthred pool">
+                              <Label text="chose size of thred pool">
                                  <VBox.margin>
                                     <Insets top="20.0" />
                                  </VBox.margin>
@@ -90,14 +90,15 @@
                               <TableView fx:id="requestTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="429.0" prefWidth="1202.0">
                                 <columns>
                                   <TableColumn fx:id="requestIdColumn" prefWidth="75.0" text="requestId" />
-                                  <TableColumn fx:id="simulationNameColumn" prefWidth="118.39999389648438" text="simulationName" />
-                                    <TableColumn fx:id="amountToRunColumn" prefWidth="104.79997253417969" text="amount" />
-                                    <TableColumn fx:id="userNameColumn" minWidth="2.4000244140625" prefWidth="108.800048828125" text="user name" />
-                                    <TableColumn fx:id="tickToRun" minWidth="6.4000244140625" prefWidth="127.199951171875" text="tick to run" />
-                                    <TableColumn fx:id="secToRun" prefWidth="131.20001220703125" text="sec to run" />
-                                    <TableColumn fx:id="requestStatusColumn" prefWidth="118.39999389648438" text="status" />
-                                    <TableColumn fx:id="currentlyRunningSimulationColumn" prefWidth="118.39999389648438" text="running" />
-                                    <TableColumn fx:id="doneRunningColumn" prefWidth="118.39999389648438" text="done" />
+                                  <TableColumn fx:id="simulationNameColumn" prefWidth="142.4000244140625" text="simulationName" />
+                                    <TableColumn fx:id="amountToRunColumn" prefWidth="110.39997863769531" text="amount" />
+                                    <TableColumn fx:id="userNameColumn" minWidth="2.4000244140625" prefWidth="109.5999755859375" text="user name" />
+                                    <TableColumn fx:id="userTerminateOnlyColumn" minWidth="6.4000244140625" prefWidth="149.5999755859375" text="user terminate only" />
+                                    <TableColumn fx:id="tickToRun" prefWidth="111.20001220703125" text="ticks to run" />
+                                    <TableColumn fx:id="secToRun" prefWidth="123.2000732421875" text="sec to run" />
+                                    <TableColumn fx:id="requestStatusColumn" prefWidth="107.99993896484375" text="status" />
+                                    <TableColumn fx:id="currentlyRunningSimulationColumn" prefWidth="120.0" text="running" />
+                                    <TableColumn fx:id="doneRunningColumn" minWidth="2.4000244140625" prefWidth="107.199951171875" text="done" />
                                 </columns>
                               </TableView>
                               <HBox prefHeight="100.0" prefWidth="200.0">

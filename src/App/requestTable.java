@@ -8,18 +8,20 @@ public class requestTable {
     private Integer amountToRun;
     private approvementStatus requestStatus;
     private String userName;
-    private Integer tick;
-    private Integer sec;
+    private String userTerminateOnly;
+    private String tick;
+    private String sec;
 
     private Integer currentlyRunningSimulation;
     private Integer doneRunning;
 
-    public requestTable(Integer requestId, String simulationName, Integer amountToRun, approvementStatus requestStatus, String userName, Integer tick, Integer sec, Integer currentlyRunningSimulation, Integer doneRunning) {
+    public requestTable(Integer requestId, String simulationName, Integer amountToRun, approvementStatus requestStatus, String userName, String userTerminateOnly, String tick, String sec, Integer currentlyRunningSimulation, Integer doneRunning) {
         this.requestId = requestId;
         this.simulationName = simulationName;
         this.amountToRun = amountToRun;
         this.requestStatus = requestStatus;
         this.userName = userName;
+        this.userTerminateOnly = userTerminateOnly;
         this.tick = tick;
         this.sec = sec;
         this.currentlyRunningSimulation = currentlyRunningSimulation;
@@ -34,6 +36,14 @@ public class requestTable {
 //        this.currentlyRunningSimulation = currentlyRunningSimulation;
 //        this.doneRunning = doneRunning;
 //    }
+
+    public String getUserTerminateOnly(){
+        return userTerminateOnly;
+    }
+
+    public void setUserTerminateOnly(String userTerminateOnly){
+        this.userTerminateOnly = userTerminateOnly;
+    }
 
     public Integer getRequestId() {
         return requestId;
@@ -91,19 +101,19 @@ public class requestTable {
         this.userName = userName;
     }
 
-    public Integer getTick() {
+    public String getTick() {
         return tick;
     }
 
-    public void setTick(Integer tick) {
+    public void setTick(String tick) {
         this.tick = tick;
     }
 
-    public Integer getSec() {
+    public String getSec() {
         return sec;
     }
 
-    public void setSec(Integer sec) {
+    public void setSec(String sec) {
         this.sec = sec;
     }
 }

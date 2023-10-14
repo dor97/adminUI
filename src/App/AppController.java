@@ -94,8 +94,9 @@ public class AppController implements Initializable {
     @FXML private TableColumn<requestTable, Integer> currentlyRunningSimulationColumn;
     @FXML private TableColumn<requestTable, Integer> doneRunningColumn;
     @FXML private TableColumn<requestTable, String> userNameColumn;
-    @FXML private TableColumn<requestTable, Integer> tickToRun;
-    @FXML private TableColumn<requestTable, Integer> secToRun;
+    @FXML private TableColumn<requestTable, String> userTerminateOnlyColumn;
+    @FXML private TableColumn<requestTable, String> tickToRun;
+    @FXML private TableColumn<requestTable, String> secToRun;
     @FXML private TableView<entityOriginalSimulationValuesTable> entityOriginValueTable;
     @FXML private TableColumn<entityOriginalSimulationValuesTable, String> entityNameOriginColumn;
     @FXML private TableColumn<entityOriginalSimulationValuesTable, Integer> populationOriginColumn;
@@ -176,8 +177,16 @@ public class AppController implements Initializable {
         }
 
         if(isThereAdmin.getAdminExist()){
-            alert.setContentText("admin all ready exist");
-            alert.show();
+            Thread thread = new Thread(() -> {  try{
+                                                        Thread.sleep(1500);
+                                                    }catch (Exception e) {
+
+                                                }
+                                                alert.setContentText("admin all ready exist");
+                                                Platform.runLater(() -> alert.show());
+            });
+            thread.setDaemon(true);
+            thread.start();
             return;
         }
 
@@ -199,6 +208,7 @@ public class AppController implements Initializable {
         currentlyRunningSimulationColumn.setCellValueFactory(new PropertyValueFactory<>("currentlyRunningSimulation"));
         doneRunningColumn.setCellValueFactory(new PropertyValueFactory<>("doneRunning"));
         userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        userTerminateOnlyColumn.setCellValueFactory(new PropertyValueFactory<>("userTerminateOnly"));
         tickToRun.setCellValueFactory(new PropertyValueFactory<>("tick"));
         secToRun.setCellValueFactory(new PropertyValueFactory<>("sec"));
 
@@ -375,7 +385,7 @@ public class AppController implements Initializable {
                                                     Thread.sleep(1000);
                                                     updateRequestTable();
                                                 }catch (Exception e){
-
+                                                    System.out.println(e.getMessage());
                                                 }
                                                             }
                                                         });
@@ -388,7 +398,7 @@ public class AppController implements Initializable {
         if(newRequestDataList.size() > 0){
             for (newRequestData requestData : newRequestDataList){
                 if(requestData.getType().equals(typeOfNewRequestData.NEW)){
-                    requestTablesData.add(new requestTable(requestData.getId(), requestData.getSimulationName(), requestData.getAmountToRun(), requestData.getNewStatus(), requestData.getUserName(), requestData.getTick(), requestData.getSec(), requestData.getCurrentRun(), requestData.getDone()));
+                    requestTablesData.add(new requestTable(requestData.getId(), requestData.getSimulationName(), requestData.getAmountToRun(), requestData.getNewStatus(), requestData.getUserName(), (requestData.getTick() == null && requestData.getSec() == null) ? "YES" : "NO", requestData.getTick() != null ? requestData.getTick().toString() : "None", requestData.getSec() != null ? requestData.getSec().toString() : "None", requestData.getCurrentRun(), requestData.getDone()));
                     requestIdToIndex.put(requestData.getId(), requestTablesData.size() - 1);
                 }else {
                     if(requestData.getStatusChanged()){
