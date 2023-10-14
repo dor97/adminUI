@@ -19,7 +19,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="App.AppController">
    <top>
@@ -121,44 +120,6 @@
                   </AnchorPane>
               </content>
             </Tab>
-          <Tab fx:id="newExecutionTab" text="New Execution">
-               <content>
-                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
-                     <bottom>
-                        <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" spacing="100.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Button id="pause" fx:id="clearSimulationButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#clearSimulation" prefWidth="60.0" text="Clear">
-                                 <font>
-                                    <Font size="21.0" />
-                                 </font></Button>
-                              <Button fx:id="startSimulationButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#startSimulation" prefWidth="60.0" text="Start" />
-                           </children>
-                        </HBox>
-                     </bottom>
-                     <center>
-                        <HBox fx:id="tablesHbox" alignment="TOP_CENTER" minHeight="-Infinity" minWidth="-Infinity" spacing="100.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TableView fx:id="environmentVarTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="370.0">
-                                <columns>
-                                  <TableColumn id="column" fx:id="environmentVarColumn" minWidth="-Infinity" prefWidth="184.0000278353691" text="Environment Variable" />
-                                  <TableColumn id="column" fx:id="valueColumn" minWidth="-Infinity" prefWidth="186.3999481201172" text="Value" />
-                                </columns>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </TableView>
-                              <TableView fx:id="entitiesTable" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="371.0">
-                                <columns>
-                                  <TableColumn id="column" fx:id="entityColumn" minWidth="-1.0" prefWidth="180.8000122308731" text="Entity" />
-                                  <TableColumn id="column" fx:id="populationColumn" minWidth="-Infinity" prefWidth="207.20001220703125" text="Population" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </HBox>
-                     </center>
-                  </BorderPane>
-               </content>
-          </Tab>
             <Tab fx:id="resultsTab" text="Results">
                <content>
                   <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">

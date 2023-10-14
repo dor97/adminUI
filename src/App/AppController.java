@@ -70,14 +70,14 @@ public class AppController implements Initializable {
     @FXML private Label secondsLabel;
     @FXML private Label secondsValueLabel;
     @FXML private HBox tablesHbox;
-    @FXML private Button startSimulationButton;
-    @FXML private Button clearSimulationButton;
-    @FXML private TableColumn<EntitiesTable, TextField> populationColumn;
-    @FXML private TableColumn<EntitiesTable, String> entityColumn;
-    @FXML private TableView<EntitiesTable> entitiesTable;
-    @FXML private TableColumn<EnvironmentVariableTable, TextField> valueColumn;
-    @FXML private TableColumn<EnvironmentVariableTable, String > environmentVarColumn;
-    @FXML private TableView<EnvironmentVariableTable> environmentVarTable;
+    //@FXML private Button startSimulationButton;
+    //@FXML private Button clearSimulationButton;
+    //@FXML private TableColumn<EntitiesTable, TextField> populationColumn;
+    //@FXML private TableColumn<EntitiesTable, String> entityColumn;
+    //@FXML private TableView<EntitiesTable> entitiesTable;
+    //@FXML private TableColumn<EnvironmentVariableTable, TextField> valueColumn;
+    //@FXML private TableColumn<EnvironmentVariableTable, String > environmentVarColumn;
+    //@FXML private TableView<EnvironmentVariableTable> environmentVarTable;
     @FXML private BorderPane treeViewComponent;
     @FXML private TreeDetailsController treeDetailsController;
     @FXML private TreeViewController treeViewController;
@@ -192,10 +192,10 @@ public class AppController implements Initializable {
 
         resultsGraphButton.setDisable(true);
         histogramButton.setDisable(true);
-        environmentVarColumn.setCellValueFactory(new PropertyValueFactory<>("envVarNameColumn"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        entityColumn.setCellValueFactory(new PropertyValueFactory<>("entityName"));
-        populationColumn.setCellValueFactory(new PropertyValueFactory<>("population"));
+//        environmentVarColumn.setCellValueFactory(new PropertyValueFactory<>("envVarNameColumn"));
+//        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+//        entityColumn.setCellValueFactory(new PropertyValueFactory<>("entityName"));
+//        populationColumn.setCellValueFactory(new PropertyValueFactory<>("population"));
         entityRunColumn.setCellValueFactory(new PropertyValueFactory<>("entityName"));
         populationRunColumn.setCellValueFactory(new PropertyValueFactory<>("population"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -221,8 +221,8 @@ public class AppController implements Initializable {
         environmentOriginValueTable.setItems(environmentOriginValues);
         entityOriginValueTable.setItems(entityOriginValues);
         requestTable.setItems(requestTablesData);
-        environmentVarTable.setItems(environmentVariableTableData);
-        entitiesTable.setItems(entitiesTableData);
+//        environmentVarTable.setItems(environmentVariableTableData);
+//        entitiesTable.setItems(entitiesTableData);
         entitiesRunTable.setItems(entitiesRunTablesData);
         queueManagementTable.setItems(queueManagementData);
         executionListView.setItems(executionListViewData);
@@ -233,22 +233,6 @@ public class AppController implements Initializable {
 
 
         executionListView.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
-
-            try{
-                DTOPostRunPrepareSimulationData postRunPrepareSimulationData = communication.getSimulationPrepareData(newValue.getID());
-                entityOriginValues.clear();
-                entityOriginValues.addAll(postRunPrepareSimulationData.getEntitiesPopulation().entrySet().stream().map(entry -> new entityOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
-                entityOriginValueTable.refresh();
-
-                environmentOriginValues.clear();
-                environmentOriginValues.addAll(postRunPrepareSimulationData.getEnvironmentsValues().entrySet().stream().map(entry -> new environmentOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
-                environmentOriginValueTable.refresh();
-
-            }catch (Exception e){
-                alert.setContentText(e.getMessage());
-                alert.show();
-            }
-
 
             try {
                 if (newTask != null && communication.getSimulationStatus(lastSimulationNum).getSimulationStatus() == Status.RUNNING) {
@@ -269,6 +253,21 @@ public class AppController implements Initializable {
                 histogramButton.setDisable(true);
                 resultsGraphButton.setDisable(true);
                 exceptionArea.setText("");
+
+                try{
+                    DTOPostRunPrepareSimulationData postRunPrepareSimulationData = communication.getSimulationPrepareData(newValue.getID());
+                    entityOriginValues.clear();
+                    entityOriginValues.addAll(postRunPrepareSimulationData.getEntitiesPopulation().entrySet().stream().map(entry -> new entityOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
+                    entityOriginValueTable.refresh();
+
+                    environmentOriginValues.clear();
+                    environmentOriginValues.addAll(postRunPrepareSimulationData.getEnvironmentsValues().entrySet().stream().map(entry -> new environmentOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
+                    environmentOriginValueTable.refresh();
+
+                }catch (Exception e){
+                    alert.setContentText(e.getMessage());
+                    alert.show();
+                }
 
                 ExecutionListItem selectedListItem = newValue;
                 Integer selectedValue = selectedListItem.getID();
@@ -718,114 +717,114 @@ public class AppController implements Initializable {
         }
     }
 
-    public void startSimulation(ActionEvent actionEvent) {
-        try{
-//            for (EnvironmentVariableTable environmentVariable : environmentVariableTableData){
-//                if (!environmentVariable.getValue().getText().isEmpty()){
-//                    try{
-//                        engine.addEnvironmentVariableValue(environmentVariable.getEnvVarNameNoType(), environmentVariable.getValue().getText());
-//                    }catch (Exception e){
-//                        alert.setContentText(e.getMessage());
-//                        alert.show();
-//                        System.out.println(e.getMessage());
-//                        return;
-//                    }
-//                }
+//    public void startSimulation(ActionEvent actionEvent) {
+//        try{
+////            for (EnvironmentVariableTable environmentVariable : environmentVariableTableData){
+////                if (!environmentVariable.getValue().getText().isEmpty()){
+////                    try{
+////                        engine.addEnvironmentVariableValue(environmentVariable.getEnvVarNameNoType(), environmentVariable.getValue().getText());
+////                    }catch (Exception e){
+////                        alert.setContentText(e.getMessage());
+////                        alert.show();
+////                        System.out.println(e.getMessage());
+////                        return;
+////                    }
+////                }
+////            }
+////
+////            for (EntitiesTable entity : entitiesTableData){
+////                if (!entity.getPopulation().getText().equals("0")){
+////                    try{
+////                        engine.addPopulationToEntity(entity.getEntityName(), Integer.parseInt(entity.getPopulation().getText()));
+////                    }catch (Exception e){
+////                        alert.setContentText(e.getMessage());
+////                        alert.show();
+////                        System.out.println(e.getMessage());
+////                        return;
+////                    }
+////                }
+////            }//TODO change
+//            Integer requestId = communication.getRequestIdChosen();
+//            if(requestId == null){
+//                return;
 //            }
+//            Map<String, String> environmentVariableMap = environmentVariableTableData.stream().collect(Collectors.toMap(environmentVariable -> environmentVariable.getEnvVarNameNoType(), environmentVariable -> environmentVariable.getValue().getText()));
+//            Map<String, Integer> entityMap = entitiesTableData.stream().collect(Collectors.toMap(entity -> entity.getEntityName(), entity -> Integer.parseInt(entity.getPopulation().getText())));
+//            DTOResultOfPrepareSimulation resultOfPrepareSimulation = communication.prepareSimulation(requestId, communication.getUserName(), environmentVariableMap, entityMap);
+//            DTOSimulationId simulationId = communication.startSimulation();
+//            entityOriginalValuesMap.put(simulationId.getSimulationId(), entityMap.entrySet().stream().map(entry -> new entityOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
+//            environmentOriginalValuesMap.put(simulationId.getSimulationId(), resultOfPrepareSimulation.getEnvironmentVariablesValuesList().stream().map(DTOEnvironment -> new environmentOriginalSimulationValuesTable(DTOEnvironment.getName(), DTOEnvironment.getValue().toString())).collect(Collectors.toList()));
 //
-//            for (EntitiesTable entity : entitiesTableData){
-//                if (!entity.getPopulation().getText().equals("0")){
-//                    try{
-//                        engine.addPopulationToEntity(entity.getEntityName(), Integer.parseInt(entity.getPopulation().getText()));
-//                    }catch (Exception e){
-//                        alert.setContentText(e.getMessage());
-//                        alert.show();
-//                        System.out.println(e.getMessage());
-//                        return;
-//                    }
-//                }
-//            }//TODO change
-            Integer requestId = communication.getRequestIdChosen();
-            if(requestId == null){
-                return;
-            }
-            Map<String, String> environmentVariableMap = environmentVariableTableData.stream().collect(Collectors.toMap(environmentVariable -> environmentVariable.getEnvVarNameNoType(), environmentVariable -> environmentVariable.getValue().getText()));
-            Map<String, Integer> entityMap = entitiesTableData.stream().collect(Collectors.toMap(entity -> entity.getEntityName(), entity -> Integer.parseInt(entity.getPopulation().getText())));
-            DTOResultOfPrepareSimulation resultOfPrepareSimulation = communication.prepareSimulation(requestId, communication.getUserName(), environmentVariableMap, entityMap);
-            DTOSimulationId simulationId = communication.startSimulation();
-            entityOriginalValuesMap.put(simulationId.getSimulationId(), entityMap.entrySet().stream().map(entry -> new entityOriginalSimulationValuesTable(entry.getKey(), entry.getValue())).collect(Collectors.toList()));
-            environmentOriginalValuesMap.put(simulationId.getSimulationId(), resultOfPrepareSimulation.getEnvironmentVariablesValuesList().stream().map(DTOEnvironment -> new environmentOriginalSimulationValuesTable(DTOEnvironment.getName(), DTOEnvironment.getValue().toString())).collect(Collectors.toList()));
-
-            //communication.setChosenSimulationId(simulationId.getSimulationId());
-            simulationID = simulationId.getSimulationId();
-//            engine.setSimulation();
-//            simulationID = engine.activeSimulation(new myTask());
-            executionListViewData.add(new ExecutionListItem(simulationID));
-            if(isFirstSimulationForFile){
-                isFirstSimulationForFile = false;
-                //engine.updateNewlyFinishedSimulationInLoop(executionListViewData);
-                Thread thread = new Thread(() -> {  while(true)
-                {List<Integer> ids = communication.getNewlyFinishedSimulation(communication.getPrevIndexForFinishedSimulation());
-                    for(Integer id : ids){
-                        for(ExecutionListItem executionListItem : executionListViewData){
-                            if(executionListItem.getID().equals(id)){
-                                executionListItem.setToFinished();
-                            }
-                        }
-                    }
-                    Platform.runLater(() -> executionListView.refresh());
-//                    Platform.runLater(() -> {executionListViewData.removeAll(ids);
-//                        executionListView.refresh();});
-//                    ObservableList<ExecutionListItem> toRemove = FXCollections.observableArrayList();
+//            //communication.setChosenSimulationId(simulationId.getSimulationId());
+//            simulationID = simulationId.getSimulationId();
+////            engine.setSimulation();
+////            simulationID = engine.activeSimulation(new myTask());
+//            executionListViewData.add(new ExecutionListItem(simulationID));
+//            if(isFirstSimulationForFile){
+//                isFirstSimulationForFile = false;
+//                //engine.updateNewlyFinishedSimulationInLoop(executionListViewData);
+//                Thread thread = new Thread(() -> {  while(true)
+//                {List<Integer> ids = communication.getNewlyFinishedSimulation(communication.getPrevIndexForFinishedSimulation());
 //                    for(Integer id : ids){
 //                        for(ExecutionListItem executionListItem : executionListViewData){
 //                            if(executionListItem.getID().equals(id)){
-//                                toRemove.add(executionListItem);
+//                                executionListItem.setToFinished();
 //                            }
 //                        }
 //                    }
+//                    Platform.runLater(() -> executionListView.refresh());
+////                    Platform.runLater(() -> {executionListViewData.removeAll(ids);
+////                        executionListView.refresh();});
+////                    ObservableList<ExecutionListItem> toRemove = FXCollections.observableArrayList();
+////                    for(Integer id : ids){
+////                        for(ExecutionListItem executionListItem : executionListViewData){
+////                            if(executionListItem.getID().equals(id)){
+////                                toRemove.add(executionListItem);
+////                            }
+////                        }
+////                    }
+////
+////                    Platform.runLater(() -> {for(ExecutionListItem executionListItem : toRemove){//TODO make logic when simulation ended
+////                        executionListViewData.remove(executionListItem);
+////                        executionListViewData.add(new ExecutionListItem(executionListItem.getID(), true));
+////
+////                    }});
 //
-//                    Platform.runLater(() -> {for(ExecutionListItem executionListItem : toRemove){//TODO make logic when simulation ended
-//                        executionListViewData.remove(executionListItem);
-//                        executionListViewData.add(new ExecutionListItem(executionListItem.getID(), true));
 //
-//                    }});
+//                    if(ids.size() != 0) {
+//                        StringBuilder result = new StringBuilder();
+//                        result.append("The following simulations are done: ");
+//                        ids.stream().forEach(id -> result.append(id.toString() + "  "));
+//                        Platform.runLater(() -> { Alert fines = new Alert(Alert.AlertType.INFORMATION);
+//                                                  fines.setTitle("simulation/s finished");
+//
+//                                                  //fines.setHeight(200);
+//                                                  fines.setContentText(result.toString());
+//                                                  fines.show();});
+//                    }
+//                    try{Thread.sleep(1000);}catch (InterruptedException e){}}
+//                });
+//                thread.setDaemon(true);
+//                thread.start();
+//            }
+//
+//        }catch (Exception e){
+//            alert.setContentText(e.getMessage());
+//            alert.show();
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
-
-                    if(ids.size() != 0) {
-                        StringBuilder result = new StringBuilder();
-                        result.append("The following simulations are done: ");
-                        ids.stream().forEach(id -> result.append(id.toString() + "  "));
-                        Platform.runLater(() -> { Alert fines = new Alert(Alert.AlertType.INFORMATION);
-                                                  fines.setTitle("simulation/s finished");
-
-                                                  //fines.setHeight(200);
-                                                  fines.setContentText(result.toString());
-                                                  fines.show();});
-                    }
-                    try{Thread.sleep(1000);}catch (InterruptedException e){}}
-                });
-                thread.setDaemon(true);
-                thread.start();
-            }
-
-        }catch (Exception e){
-            alert.setContentText(e.getMessage());
-            alert.show();
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void clearSimulation(ActionEvent actionEvent) {
-
-        for (EnvironmentVariableTable environmentVariable : environmentVariableTableData){
-            environmentVariable.getValue().setText("");
-        }
-
-        for (EntitiesTable entity : entitiesTableData){
-            entity.getPopulation().setText("0");
-        }
-    }
+//    public void clearSimulation(ActionEvent actionEvent) {
+//
+//        for (EnvironmentVariableTable environmentVariable : environmentVariableTableData){
+//            environmentVariable.getValue().setText("");
+//        }
+//
+//        for (EntitiesTable entity : entitiesTableData){
+//            entity.getPopulation().setText("0");
+//        }
+//    }
 
 
     public void showGraph(ActionEvent actionEvent) {
@@ -869,11 +868,11 @@ public class AppController implements Initializable {
         detailsBorderPane.setStyle("-fx-background-color: #efba71;");
         statusColumn.setStyle("-fx-background-color: #efba71;");
         amountColumn.setStyle("-fx-background-color: #efba71;");
-        environmentVarColumn.setStyle("-fx-background-color: #fc6b3c;");
-        valueColumn.setStyle("-fx-background-color: #fc6b3c;");
-        entityColumn.setStyle("-fx-background-color: #fc6b3c;");
-        populationColumn.setStyle("-fx-background-color: #fc6b3c;");
-        startSimulationButton.setStyle("-fx-background-color: #eac81d;");
+//        environmentVarColumn.setStyle("-fx-background-color: #fc6b3c;");
+//        valueColumn.setStyle("-fx-background-color: #fc6b3c;");
+//        entityColumn.setStyle("-fx-background-color: #fc6b3c;");
+//        populationColumn.setStyle("-fx-background-color: #fc6b3c;");
+//        startSimulationButton.setStyle("-fx-background-color: #eac81d;");
         executionListView.setStyle("-fx-background-color: #fdc076;");
         entityRunColumn.setStyle("-fx-background-color: #FD7676FF;");
         populationRunColumn.setStyle("-fx-background-color: #FD7676FF;");
@@ -893,11 +892,11 @@ public class AppController implements Initializable {
         resultsGraphButton.setStyle("-fx-background-color: #ee7d0c;");
 //        pauseButton.setStyle("-fx-background-color: #FF0000FF;");
 //        stopSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
-        clearSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
+//        clearSimulationButton.setStyle("-fx-background-color: #FF0000FF;");
 //        graphicDisplayButton.setStyle("-fx-background-color: #efba71;");
         queueManagementTable.refresh();
-        environmentVarTable.refresh();
-        entitiesTable.refresh();
+//        environmentVarTable.refresh();
+//        entitiesTable.refresh();
         entitiesRunTable.refresh();
     }
     public void changeStyleCold(ActionEvent actionEvent) {
@@ -909,12 +908,12 @@ public class AppController implements Initializable {
         detailsBorderPane.setStyle("-fx-background-color: #74EFA9FF;");
         statusColumn.setStyle("-fx-background-color: #0AD6F1FF;");
         amountColumn.setStyle("-fx-background-color: #0AD6F1FF;");
-        environmentVarColumn.setStyle("-fx-background-color: #A777E5FF;");
-        valueColumn.setStyle("-fx-background-color: #A777E5FF;");
-        entityColumn.setStyle("-fx-background-color: #A777E5FF;");
-        populationColumn.setStyle("-fx-background-color: #A777E5FF;");
-        startSimulationButton.setStyle("-fx-background-color: #6193B2FF;");
-        clearSimulationButton.setStyle("-fx-background-color: #8d77d9;");
+//        environmentVarColumn.setStyle("-fx-background-color: #A777E5FF;");
+//        valueColumn.setStyle("-fx-background-color: #A777E5FF;");
+//        entityColumn.setStyle("-fx-background-color: #A777E5FF;");
+//        populationColumn.setStyle("-fx-background-color: #A777E5FF;");
+//        startSimulationButton.setStyle("-fx-background-color: #6193B2FF;");
+//        clearSimulationButton.setStyle("-fx-background-color: #8d77d9;");
         executionListView.setStyle("-fx-background-color: #1dea76;");
         entityRunColumn.setStyle("-fx-background-color: #4BA7E0FF;");
         populationRunColumn.setStyle("-fx-background-color: #4BA7E0FF;");
@@ -936,8 +935,8 @@ public class AppController implements Initializable {
 //        stopSimulationButton.setStyle("-fx-background-color: #994de3;");
 //        graphicDisplayButton.setStyle("-fx-background-color: #96b2bd;");
         queueManagementTable.refresh();
-        environmentVarTable.refresh();
-        entitiesTable.refresh();
+//        environmentVarTable.refresh();
+//        entitiesTable.refresh();
         entitiesRunTable.refresh();
     }
 
@@ -975,12 +974,12 @@ public class AppController implements Initializable {
         detailsBorderPane.setStyle(null);
         statusColumn.setStyle(null);
         amountColumn.setStyle(null);
-        environmentVarColumn.setStyle(null);
-        valueColumn.setStyle(null);
-        entityColumn.setStyle(null);
-        populationColumn.setStyle(null);
-        startSimulationButton.setStyle(null);
-        clearSimulationButton.setStyle(null);
+//        environmentVarColumn.setStyle(null);
+//        valueColumn.setStyle(null);
+//        entityColumn.setStyle(null);
+//        populationColumn.setStyle(null);
+//        startSimulationButton.setStyle(null);
+//        clearSimulationButton.setStyle(null);
         executionListView.setStyle(null);
         entityRunColumn.setStyle(null);
         populationRunColumn.setStyle(null);
@@ -1002,8 +1001,8 @@ public class AppController implements Initializable {
 //        stopSimulationButton.setStyle(null);
 //        graphicDisplayButton.setStyle(null);
         queueManagementTable.refresh();
-        environmentVarTable.refresh();
-        entitiesTable.refresh();
+//        environmentVarTable.refresh();
+//        entitiesTable.refresh();
         entitiesRunTable.refresh();
     }
 
