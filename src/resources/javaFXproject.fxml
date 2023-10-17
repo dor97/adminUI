@@ -94,10 +94,10 @@
                                     <TableColumn fx:id="userNameColumn" minWidth="2.4000244140625" prefWidth="109.5999755859375" text="user name" />
                                     <TableColumn fx:id="userTerminateOnlyColumn" minWidth="6.4000244140625" prefWidth="149.5999755859375" text="user terminate only" />
                                     <TableColumn fx:id="tickToRun" prefWidth="111.20001220703125" text="ticks to run" />
-                                    <TableColumn fx:id="secToRun" prefWidth="123.2000732421875" text="sec to run" />
-                                    <TableColumn fx:id="requestStatusColumn" prefWidth="107.99993896484375" text="status" />
-                                    <TableColumn fx:id="currentlyRunningSimulationColumn" prefWidth="120.0" text="running" />
-                                    <TableColumn fx:id="doneRunningColumn" minWidth="2.4000244140625" prefWidth="107.199951171875" text="done" />
+                                    <TableColumn fx:id="secToRun" prefWidth="133.5999755859375" text="seconds to run" />
+                                    <TableColumn fx:id="requestStatusColumn" prefWidth="124.0" text="status" />
+                                    <TableColumn fx:id="currentlyRunningSimulationColumn" prefWidth="101.5999755859375" text="running" />
+                                    <TableColumn fx:id="doneRunningColumn" minWidth="2.4000244140625" prefWidth="110.39990234375" text="done" />
                                 </columns>
                               </TableView>
                               <HBox prefHeight="100.0" prefWidth="200.0">
@@ -167,9 +167,9 @@
                                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="40.0" vgrow="ALWAYS" />
                                 </rowConstraints>
                                  <children>
-                                    <Label fx:id="ticksLabel" text="Ticks:" GridPane.rowIndex="2" />
+                                    <Label fx:id="ticksLabel" minHeight="-Infinity" minWidth="-Infinity" text="Ticks:" GridPane.rowIndex="2" />
                                     <Label fx:id="ticksValueLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="secondsLabel" text="Seconds:" GridPane.rowIndex="3" />
+                                    <Label fx:id="secondsLabel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="62.0" text="Seconds:" GridPane.rowIndex="3" />
                                     <Label fx:id="secondsValueLabel" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <TextArea fx:id="exceptionArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
                                     <Label fx:id="exceptionLabel" text="Exceptions:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
